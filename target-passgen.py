@@ -4,18 +4,9 @@ password_list = []
 min_char = 8
 max_char = 12
 num_before = False
-num_after = True
+num_after = TrueS
 num_before_and_after = False
 exp = 4
-
-
-def print_all():
-    print(min_char)
-    print(max_char)
-    print(num_before)
-    print(num_after)
-    print(num_before_and_after)
-    print(exp)
 
 
 def yes_or_no():
@@ -157,6 +148,7 @@ def user_settings_choice(user_settings):
 
 def user_choice():
     choice = ""
+
     while choice != "d" and choice != "c":
         choice = str(input("Press 'd' to default settings or 'c' to change settings: ").lower())
         if choice == "d":
@@ -169,45 +161,58 @@ def user_choice():
 
 def fun_x(password):
     e = exp
+
     for x in range(4, 0, -1):
         r = 10 ** e
         e -= 1
 
         for num in range(r):
             if num_before:
-
                 password_list.append(str(num).zfill(x) + str(password))
                 password_list.append(str(num).zfill(x) + str(password.lower()))
                 password_list.append(str(num).zfill(x) + str(password.upper()))
 
             if num_after:
-
                 password_list.append(str(password) + str(num).zfill(x))
                 password_list.append(str(password.lower()) + str(num).zfill(x))
                 password_list.append(str(password.upper()) + str(num).zfill(x))
 
             if num_before_and_after:
-
                 password_list.append(str(num).zfill(x) + str(password) + str(num).zfill(x))
                 password_list.append(str(num).zfill(x) + str(password.lower()) + str(num).zfill(x))
                 password_list.append(str(num).zfill(x) + str(password.upper()) + str(num).zfill(x))
 
+    make_pass_list()
+    enter_words()
+
+
+def enter_words():
+    user_input = str(input("Enter word ('//' to stop): "))
+
+    if user_input != "" and user_input != "//":
+        fun_x(user_input)
+        return user_input
+    elif user_input == "":
+        print("No word entered!")
+    else:
+        return
+
+
+def make_pass_list():
+    global password_list
+    password_list2 = []
+    txt = password_list[:]
+
+    for word in txt:
+        if min_char <= len(word) <= max_char:
+            password_list2.append(word)
+
+    file = open("Passwords_list.txt", "a+")
+    file.write("\n".join(map(str, password_list2)))
+    password_list = []
+
 
 user_choice()
-word = str(input("word: "))
-fun_x(word)
-
-password_list2 = []
-txt = password_list[:]
-
-
-for word in txt:
-    if min_char <= len(word) <= max_char:
-        password_list2.append(word)
-
-
-file = open("Passwords_list.txt", "a+")
-file.write("\n".join(map(str, password_list2)))
-
+enter_words()
 
 exit()
