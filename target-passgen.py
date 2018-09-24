@@ -1,18 +1,33 @@
 #!/usr/bin/env python3
 
+"""
+Target Password Generator
+Generates passwords with the target in mind!
+"""
+
 password_list = []
 min_char = 8
 max_char = 12
 num_before = False
-num_after = TrueS
+num_after = True
 num_before_and_after = False
+upper_and_lower = False
 exp = 4
+
+
+def print_header():
+    print("")
+    print("1100101001110100110011001000110001101011001101000110101001110110")
+    print("  00100010101011011101011  TARGET-PASSGEN  01001011011000101110110")
+    print("    0111001000010111001100110101100111011011001000101010011101001101")
+    print("")
 
 
 def yes_or_no():
     global nb
     global na
     global nba
+    global ul
 
     if num_before:
         nb = "y"
@@ -29,21 +44,28 @@ def yes_or_no():
     if not num_before_and_after:
         nba = "n"
 
+    if upper_and_lower:
+        ul = "y"
+    if not upper_and_lower:
+        ul = "n"
+
 
 def settings():
     yes_or_no()
-    print("")
+    print("\n\n====================================================================")
+    print("                              Settings")
+    print("====================================================================\n")
     print("[0] Exit settings")
-    print("[1] Passwords minimum length (default = 8)")
-    print("[2] Passwords maximum length (default = 12)")
-    print("[3] Passwords with numbers before (default = n)")
-    print("[4] Passwords with numbers after (default = y)")
-    print("[5] Passwords with numbers before and after (default = n)")
-    print("[6] Length of numbers (default = 4)")
-    print("\nSettings = [1]:%d  [2]:%d  [3]:%s  [4]:%s  [5]:%s  [6]:%d" % (min_char, max_char, nb, na, nba, exp))
-    print("\n=========================================================\n")
-    user_settings = int(input("Choose setting number(0-6): "))
-    if 0 > user_settings > 6:
+    print("[1] Passwords minimum length (default = 8)                    [1]:%d" % min_char)
+    print("[2] Passwords maximum length (default = 12)                   [2]:%d" % max_char)
+    print("[3] Passwords with numbers before (default = n)               [3]:%s" % nb)
+    print("[4] Passwords with numbers after (default = y)                [4]:%s" % na)
+    print("[5] Passwords with numbers before and after (default = n)     [5]:%s" % nba)
+    print("[6] Passwords with capital/small letters (default = n)        [6]:%s" % ul)
+    print("[7] Length of numbers (default = 4)                           [7]:%d" % exp)
+    print("\n====================================================================\n")
+    user_settings = int(input("Choose settings number (0-7): "))
+    if 0 > user_settings > 7:
         print("Invalid value!")
         settings()
     else:
@@ -57,6 +79,7 @@ def user_settings_choice(user_settings):
     global num_before
     global num_after
     global num_before_and_after
+    global upper_and_lower
     global exp
 
     if user_settings == 0:
@@ -136,10 +159,25 @@ def user_settings_choice(user_settings):
 
     elif user_settings == 6:
         while True:
-            print("\n" + "[6] Length of numbers (default = 4)")
-            value6 = int(input("    Set the new value (0 - 8): "))
-            if 0 <= value6 <= 8:
-                exp = value6
+            print("\n" + "[6] Passwords with capital/small letters (default = n)")
+            value6 = str(input("    Set to 'y' (yes) or 'n' (no): ").lower())
+            if value6 == "y":
+                upper_and_lower = True
+                settings()
+                return
+            elif value6 == "n":
+                upper_and_lower = False
+                settings()
+                return
+            else:
+                print("Invalid input!")
+
+    elif user_settings == 7:
+        while True:
+            print("\n" + "[7] Length of numbers (default = 4)")
+            value7 = int(input("    Set the new value (0 - 8): "))
+            if 0 <= value7 <= 8:
+                exp = value7
                 settings()
                 return
             else:
@@ -169,18 +207,21 @@ def fun_x(password):
         for num in range(r):
             if num_before:
                 password_list.append(str(num).zfill(x) + str(password))
-                password_list.append(str(num).zfill(x) + str(password.lower()))
-                password_list.append(str(num).zfill(x) + str(password.upper()))
+                if upper_and_lower:
+                    password_list.append(str(num).zfill(x) + str(password.lower()))
+                    password_list.append(str(num).zfill(x) + str(password.upper()))
 
             if num_after:
                 password_list.append(str(password) + str(num).zfill(x))
-                password_list.append(str(password.lower()) + str(num).zfill(x))
-                password_list.append(str(password.upper()) + str(num).zfill(x))
+                if upper_and_lower:
+                    password_list.append(str(password.lower()) + str(num).zfill(x))
+                    password_list.append(str(password.upper()) + str(num).zfill(x))
 
             if num_before_and_after:
                 password_list.append(str(num).zfill(x) + str(password) + str(num).zfill(x))
-                password_list.append(str(num).zfill(x) + str(password.lower()) + str(num).zfill(x))
-                password_list.append(str(num).zfill(x) + str(password.upper()) + str(num).zfill(x))
+                if upper_and_lower:
+                    password_list.append(str(num).zfill(x) + str(password.lower()) + str(num).zfill(x))
+                    password_list.append(str(num).zfill(x) + str(password.upper()) + str(num).zfill(x))
 
     make_pass_list()
     enter_words()
@@ -212,6 +253,7 @@ def make_pass_list():
     password_list = []
 
 
+print_header()
 user_choice()
 enter_words()
 
