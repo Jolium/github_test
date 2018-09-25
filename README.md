@@ -2,20 +2,15 @@
 
 
 ### Target Passorwds Generator
-
 ### Generates passwords with the target in mind!
-
-
-
-
+####
+####
 ####   00100010101011011101011  TARGET-PASSGEN  01001011011000101110110
-
-
-
-                              Settings:
-
-
-
+####
+####
+####                              Settings:
+####
+####
 ####[1] Passwords minimum length ........................ (from 1 to 12)
 ####[2] Passwords maximum length ........................ (from 8 to 18)
 ####[3] Passwords with numbers before ........... (1234abcd, 567890abcd)
