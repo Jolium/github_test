@@ -8,9 +8,8 @@ Target Passorwds Generator
 
 Generates passwords with the target in mind!
 
-==================================================================== 
                               Settings:
-====================================================================
+
 
 [0] Exit settings
 [1] Passwords minimum length ........................ (from 1 to 12)
@@ -20,5 +19,3 @@ Generates passwords with the target in mind!
 [5] Passwords with numbers before and after ......... (1234abcd5678)
 [6] Passwords with capital/small letters ....... (ABCD1234/abcd1234)
 [7] Length of numbers ............... (abcd1234, abcd12, abcd123456)
-
-====================================================================
